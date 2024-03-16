@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище Practic_restModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cooker">
+          <Key>
+            <PropertyRef Name="ID_cookers" />
+          </Key>
+          <Property Name="ID_cookers" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Middlename" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Eat">
+          <Key>
+            <PropertyRef Name="ID_eats" />
+          </Key>
+          <Property Name="ID_eats" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Eats" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="ID_menu" />
+          </Key>
+          <Property Name="ID_menu" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Eats_ID" Type="int" Nullable="false" />
+          <Property Name="Cookers_ID" Type="int" Nullable="false" />
+          <Property Name="Enable" Type="varchar" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "Practic_rest.dbo.Viewsi" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="Viewsi">
+          <Key>
+            <PropertyRef Name="Блюдо" />
+            <PropertyRef Name="Цена" />
+            <PropertyRef Name="Имя_повара" />
+            <PropertyRef Name="Фамилия_повара" />
+            <PropertyRef Name="Доступность" />
+          </Key>
+          <Property Name="Блюдо" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Цена" Type="int" Nullable="false" />
+          <Property Name="Имя_повара" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Фамилия_повара" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Отчество_повара" Type="varchar" MaxLength="30" />
+          <Property Name="Доступность" Type="varchar" MaxLength="5" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Menu__Cookers_ID__534D60F1">
+          <End Role="Cooker" Type="Self.Cooker" Multiplicity="1" />
+          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cooker">
+              <PropertyRef Name="ID_cookers" />
+            </Principal>
+            <Dependent Role="Menu">
+              <PropertyRef Name="Cookers_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Menu__Eats_ID__52593CB8">
+          <End Role="Eat" Type="Self.Eat" Multiplicity="1" />
+          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Eat">
+              <PropertyRef Name="ID_eats" />
+            </Principal>
+            <Dependent Role="Menu">
+              <PropertyRef Name="Eats_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище Practic_restModelContainer">
+          <EntitySet Name="Cooker" EntityType="Self.Cooker" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Eat" EntityType="Self.Eat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Viewsi" EntityType="Self.Viewsi" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Viewsi].[Блюдо] AS [Блюдо], 
+    [Viewsi].[Цена] AS [Цена], 
+    [Viewsi].[Имя_повара] AS [Имя_повара], 
+    [Viewsi].[Фамилия_повара] AS [Фамилия_повара], 
+    [Viewsi].[Отчество_повара] AS [Отчество_повара], 
+    [Viewsi].[Доступность] AS [Доступность]
+    FROM [dbo].[Viewsi] AS [Viewsi]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Menu__Cookers_ID__534D60F1" Association="Self.FK__Menu__Cookers_ID__534D60F1">
+            <End Role="Cooker" EntitySet="Cooker" />
+            <End Role="Menu" EntitySet="Menu" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Menu__Eats_ID__52593CB8" Association="Self.FK__Menu__Eats_ID__52593CB8">
+            <End Role="Eat" EntitySet="Eat" />
+            <End Role="Menu" EntitySet="Menu" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Practic_restModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cooker">
+          <Key>
+            <PropertyRef Name="ID_cookers" />
+          </Key>
+          <Property Name="ID_cookers" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Middlename" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Menu" Relationship="Self.FK__Menu__Cookers_ID__534D60F1" FromRole="Cooker" ToRole="Menu" />
+        </EntityType>
+        <EntityType Name="Eat">
+          <Key>
+            <PropertyRef Name="ID_eats" />
+          </Key>
+          <Property Name="ID_eats" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Eats" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Menu" Relationship="Self.FK__Menu__Eats_ID__52593CB8" FromRole="Eat" ToRole="Menu" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="ID_menu" />
+          </Key>
+          <Property Name="ID_menu" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Eats_ID" Type="Int32" Nullable="false" />
+          <Property Name="Cookers_ID" Type="Int32" Nullable="false" />
+          <Property Name="Enable" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Cooker" Relationship="Self.FK__Menu__Cookers_ID__534D60F1" FromRole="Menu" ToRole="Cooker" />
+          <NavigationProperty Name="Eat" Relationship="Self.FK__Menu__Eats_ID__52593CB8" FromRole="Menu" ToRole="Eat" />
+        </EntityType>
+        <EntityType Name="Viewsi">
+          <Key>
+            <PropertyRef Name="Блюдо" />
+            <PropertyRef Name="Цена" />
+            <PropertyRef Name="Имя_повара" />
+            <PropertyRef Name="Фамилия_повара" />
+            <PropertyRef Name="Доступность" />
+          </Key>
+          <Property Name="Блюдо" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Цена" Type="Int32" Nullable="false" />
+          <Property Name="Имя_повара" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Фамилия_повара" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Отчество_повара" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Доступность" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Menu__Cookers_ID__534D60F1">
+          <End Role="Cooker" Type="Self.Cooker" Multiplicity="1" />
+          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cooker">
+              <PropertyRef Name="ID_cookers" />
+            </Principal>
+            <Dependent Role="Menu">
+              <PropertyRef Name="Cookers_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Menu__Eats_ID__52593CB8">
+          <End Role="Eat" Type="Self.Eat" Multiplicity="1" />
+          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Eat">
+              <PropertyRef Name="ID_eats" />
+            </Principal>
+            <Dependent Role="Menu">
+              <PropertyRef Name="Eats_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Practic_restEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cooker" EntityType="Self.Cooker" />
+          <EntitySet Name="Eat" EntityType="Self.Eat" />
+          <EntitySet Name="Menu" EntityType="Self.Menu" />
+          <EntitySet Name="Viewsi" EntityType="Self.Viewsi" />
+          <AssociationSet Name="FK__Menu__Cookers_ID__534D60F1" Association="Self.FK__Menu__Cookers_ID__534D60F1">
+            <End Role="Cooker" EntitySet="Cooker" />
+            <End Role="Menu" EntitySet="Menu" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Menu__Eats_ID__52593CB8" Association="Self.FK__Menu__Eats_ID__52593CB8">
+            <End Role="Eat" EntitySet="Eat" />
+            <End Role="Menu" EntitySet="Menu" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище Practic_restModelContainer" CdmEntityContainer="Practic_restEntities1">
+          <EntitySetMapping Name="Cooker">
+            <EntityTypeMapping TypeName="Practic_restModel.Cooker">
+              <MappingFragment StoreEntitySet="Cooker">
+                <ScalarProperty Name="ID_cookers" ColumnName="ID_cookers" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Middlename" ColumnName="Middlename" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Eat">
+            <EntityTypeMapping TypeName="Practic_restModel.Eat">
+              <MappingFragment StoreEntitySet="Eat">
+                <ScalarProperty Name="ID_eats" ColumnName="ID_eats" />
+                <ScalarProperty Name="Eats" ColumnName="Eats" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Menu">
+            <EntityTypeMapping TypeName="Practic_restModel.Menu">
+              <MappingFragment StoreEntitySet="Menu">
+                <ScalarProperty Name="ID_menu" ColumnName="ID_menu" />
+                <ScalarProperty Name="Eats_ID" ColumnName="Eats_ID" />
+                <ScalarProperty Name="Cookers_ID" ColumnName="Cookers_ID" />
+                <ScalarProperty Name="Enable" ColumnName="Enable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Viewsi">
+            <EntityTypeMapping TypeName="Practic_restModel.Viewsi">
+              <MappingFragment StoreEntitySet="Viewsi">
+                <ScalarProperty Name="Блюдо" ColumnName="Блюдо" />
+                <ScalarProperty Name="Цена" ColumnName="Цена" />
+                <ScalarProperty Name="Имя_повара" ColumnName="Имя_повара" />
+                <ScalarProperty Name="Фамилия_повара" ColumnName="Фамилия_повара" />
+                <ScalarProperty Name="Отчество_повара" ColumnName="Отчество_повара" />
+                <ScalarProperty Name="Доступность" ColumnName="Доступность" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
